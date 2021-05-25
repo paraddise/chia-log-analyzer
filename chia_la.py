@@ -179,7 +179,7 @@ def stat(limit, sort, bytmp, avg, not_completed):
     if not not_completed:
         where += 'complete = 1'
     where = where if where != 'WHERE ' else ''
-    req = f'SELECT {select} FROM plots {group_by} {where} ORDER BY {sort[0]} {sort[1]} LIMIT {limit}'
+    req = f'SELECT {select} FROM plots {where} {group_by} ORDER BY {sort[0]} {sort[1]} LIMIT {limit}'
     data = cur.execute(req).fetchall()
 
     print(tabulate(data, headers=headers, showindex="always", tablefmt='pretty', disable_numparse=True))
