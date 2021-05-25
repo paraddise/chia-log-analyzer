@@ -62,6 +62,8 @@ def init_db():
 
 
 def insert_plot(data: dict):
+    if not data.get('id', False):
+        return False
     con = get_con()
     cur = con.cursor()
     complete = bool(data.get('dst', False))
