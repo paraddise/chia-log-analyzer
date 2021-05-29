@@ -205,9 +205,11 @@ def analyze_logs(logs_dir):
 @click.option('--not-completed', type=bool, default=False, help='Include not completed jobs in stat')
 def stat(limit, sort, bytmp, avg, not_completed):
     fields = ['tmp', 'dst', 'size', 'buffer_size as buffer',
-              'threads', 'buckets', 'phase_1', 'phase_2', 'phase_3', 'phase_4', 'copy_time',
+              'threads', 'buckets', 'cast(phase_1/60 as i) as p_1', 'cast(phase_2/60 as i) as p_2',
+              'cast(phase_3/60 as i) as p_3', 'cast(phase_3/60 as i) as p_4', 'cast(copy_time/60 as i) as cp_time',
               'datetime(start, \'unixepoch\', \'localtime\') as start',
-              'datetime(end, \'unixepoch\', \'localtime\') as end', 'complete']
+              'datetime(end, \'unixepoch\', \'localtime\') as end', 'complete',
+              'cast((phase_1 + phase_2 + phase_3 + phase_4 + copy_time)/60 as i) as total']
     con = get_con()
     cur = con.cursor()
 
